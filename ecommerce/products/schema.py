@@ -1,3 +1,5 @@
+from typing import Optional
+
 from pydantic import BaseModel, constr
 
 class Category(BaseModel):
@@ -13,6 +15,28 @@ class ListCategory(BaseModel):
 
 class DisplayCategory(BaseModel):
     name: str
+
+    class Config:
+        orm_mode = True
+
+class ProductBase(BaseModel):
+    id: Optional[int]
+    name: str
+    quantity: int
+    description: str
+    price: float
+
+    class Config:
+        orm_mode = True
+
+class Product(ProductBase):
+    category_id : int
+
+    class Config:
+        orm_mode = True
+
+class ProductListing(ProductBase):
+    category : ListCategory
 
     class Config:
         orm_mode = True

@@ -27,3 +27,18 @@ async def get_category_by_id(id:int, database: Session = Depends(db.get_db)):
 @router.delete('/category/{id}', status_code=status.HTTP_204_NO_CONTENT, response_class= Response)
 async def delete_category_by_id(id: int, database: Session = Depends(db.get_db)):
     return await services.delete_category_by_id(id, database)
+
+@router.post('/', status_code=status.HTTP_201_CREATED)
+async def create_product(request: schema.Product, database: Session = Depends(db.get_db)):
+    category = await validator.verify_category_exist(request.category_id, database)
+    if not category:
+        raise HTTPException(
+            status_code=400,
+            detail="category id invalid"
+        )
+    product = await services.create_new_product(request, database)
+    return product
+
+@router.get('/', response_model=List[schema.ProductListing])
+async def get_all_products(database: Session = Depends(db.get_db)):
+    return await services.get_all_products(database)
