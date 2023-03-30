@@ -12,6 +12,7 @@ class User(Base):
     name = Column(VARCHAR(50))
     email = Column(VARCHAR(255), unique=True)
     password = Column(VARCHAR(255))
+    cart = relationship("Cart", back_populates="user_cart")
 
     def __init__(self, name, email, password, *args, **kwargs):
         self.name = name
