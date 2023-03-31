@@ -17,6 +17,7 @@ from ecommerce.db import Base, URL
 from ecommerce.user.models import User
 from ecommerce.products.models import Product, Category
 from ecommerce.cart.models import Cart, CartItems
+from ecommerce.ordrs.models import Order
 
 # add your model's MetaData object here
 # for 'autogenerate' support
